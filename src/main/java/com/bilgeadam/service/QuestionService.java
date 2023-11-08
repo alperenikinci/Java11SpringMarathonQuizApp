@@ -4,6 +4,8 @@ import com.bilgeadam.dto.request.OptionSaveRequestDto;
 import com.bilgeadam.dto.request.QuestionSaveRequestDto;
 import com.bilgeadam.dto.response.OptionResponseDto;
 import com.bilgeadam.dto.response.QuestionResponseDto;
+import com.bilgeadam.exception.ErrorType;
+import com.bilgeadam.exception.QuizAppException;
 import com.bilgeadam.mapper.QuestionMapper;
 import com.bilgeadam.repository.QuestionRepository;
 import com.bilgeadam.repository.entity.Question;
@@ -22,7 +24,7 @@ public class QuestionService {
     private final OptionService optionService;
 
 
-    //TODO response Dto yazılacak.
+
     public Question saveQuestion(QuestionSaveRequestDto dto){
         Question question = null;
         List<OptionSaveRequestDto> optionList = dto.getOptionSaveRequestDtoList();
@@ -31,8 +33,7 @@ public class QuestionService {
             question = optionService.saveAllOptions(dto.getOptionSaveRequestDtoList(),question);
             return questionRepository.save(question);
         } else {
-            //TODO custom exception fırlatılacak.
-            throw  new RuntimeException("aasdf");
+            throw new QuizAppException(ErrorType.AT_LEAST_TWO_OPTION);
         }
 
     }
@@ -52,8 +53,7 @@ public class QuestionService {
                     .build();
             return questionResponseDto;
         }else {
-            //TODO custom exception eklenecek.
-            throw new RuntimeException("");
+            throw new QuizAppException(ErrorType.QUESTION_NOT_FOUND);
         }
     }
 
@@ -71,7 +71,7 @@ public class QuestionService {
             }
             return questionResponseDtoList;
         }else {
-            throw new RuntimeException("hicbir soru bulunamadı...");
+            throw new QuizAppException(ErrorType.NO_QUESTION_FOUND);
         }
     }
 }
