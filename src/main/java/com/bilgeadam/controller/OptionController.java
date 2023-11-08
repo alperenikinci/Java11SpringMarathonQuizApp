@@ -23,19 +23,17 @@ public class OptionController {
 
     private final OptionService optionService;
 
-    private final QuestionRepository questionRepository;
+
+//    @PostMapping(SAVE)
+//    public ResponseEntity<OptionResponseDto> saveOption(@RequestBody OptionSaveRequestDto dto){
+//        return ResponseEntity.ok(optionService.saveOption(dto));
+//    }
 
 
-    @PostMapping(SAVE)
-    public ResponseEntity<OptionResponseDto> saveOption(@RequestBody OptionSaveRequestDto dto){
-        return ResponseEntity.ok(optionService.saveOption(dto));
-    }
-
-
-    @PostMapping(SAVEALL)
-    public ResponseEntity<List<OptionResponseDto>> saveAllOptions(@RequestBody List<OptionSaveRequestDto> dtoList){
-        Question question = new Question();
-        question = questionRepository.save(question);
-        return ResponseEntity.ok(optionService.saveAllOptions(dtoList,question));
-    }
+//    @PostMapping(SAVEALL)
+//    public ResponseEntity<List<OptionResponseDto>> saveAllOptions(@RequestBody List<OptionSaveRequestDto> dtoList){
+//        Question question = new Question();
+//        question = questionRepository.save(question);
+//        return ResponseEntity.ok(optionService.saveAllOptions(dtoList,question));
+//    }
 }

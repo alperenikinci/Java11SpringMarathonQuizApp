@@ -15,5 +15,7 @@ public class RestApi {
     public static final String FINDBYID = "/find_by_id";
     public static final String FINDALL = "/find_all";
     public static final String DELETE = "/delete";
+    public static final String FINDALLWITHOPTIONDATA= "/find_all_with_option_data";
+    public static final String FINDBYIDWITHOPTIONDATA = "/find_by_id_with_option_data";
 
 }

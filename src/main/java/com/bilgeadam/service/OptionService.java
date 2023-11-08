@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OptionService {
     private final OptionRepository optionRepository;
+
 
     public OptionResponseDto saveOption(OptionSaveRequestDto dto){
         Option option = OptionMapper.INSTANCE.fromSaveRequestToOption(dto);
@@ -23,7 +25,7 @@ public class OptionService {
         return OptionMapper.INSTANCE.fromOptionToResponse(option);
     }
 
-    public List<OptionResponseDto> saveAllOptions(List<OptionSaveRequestDto> dtoList, Question question){
+    public Question saveAllOptions(List<OptionSaveRequestDto> dtoList, Question question){
         List<Option> optionList = new ArrayList<>();
         List<Option> updatedOptionList = new ArrayList<>();
 
@@ -36,10 +38,14 @@ public class OptionService {
            updatedOptionList.add(option);
         }
         optionRepository.saveAll(updatedOptionList);
-        /*
+        List<Long> optionIds = updatedOptionList.stream().map(x->x.getId()).collect(Collectors.toList());
+        question.setOptionIds(optionIds);
 
+        return question ;
+    }
 
-         */
-        return OptionMapper.INSTANCE.fromOptionsToResponses(updatedOptionList);
+    public List<OptionResponseDto> findAllByQuestionId(Long id) {
+       List<Option> optionList =  optionRepository.findAllByQuestionId(id);
+       return OptionMapper.INSTANCE.fromOptionsToResponses(optionList);
     }
 }
